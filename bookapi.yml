@@ -1,0 +1,33 @@
+version: "3.7"
+
+services:
+  bookapi_db_service:
+    container_name: bookapi_db
+    image: postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=bookapi
+    volumes:
+      - bookapi_db:/var/lib/postgresql
+      - bookapi_data:/var/lib/postgresql/data
+    networks:
+      - bookapi
+
+  bookapi_service:
+    container_name: bookapi
+    restart: always
+    build: .
+    image: aguirresabino/bookapi
+    ports:
+      - "8080:8080"
+    networks:
+      - bookapi
+
+networks:
+  bookapi:
+
+volumes:
+  bookapi_db:
+  bookapi_data:
