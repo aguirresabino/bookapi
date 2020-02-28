@@ -13,6 +13,8 @@ spring:
     url: ${POSTGRES_URL}
   jpa:
     show-sql: true
+    hibernate:
+      ddl-auto: update
 
 management:
   endpoints:
