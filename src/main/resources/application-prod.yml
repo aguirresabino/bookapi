@@ -2,5 +2,14 @@ server:
   port: 8080
 
 spring:
+  application:
+    name: bookapi
   profiles:
     active: prod
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    url: ${POSTGRES_URL}
+  jpa:
+    show-sql: true
