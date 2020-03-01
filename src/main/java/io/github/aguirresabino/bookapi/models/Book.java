@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Getter
@@ -19,8 +20,9 @@ public class Book {
   @Id @GeneratedValue private Long id;
 
   @Column(unique = true)
+  @NotBlank
   private String isbn;
 
-  private String title;
-  private String author;
+  @NotBlank private String title;
+  @NotBlank private String author;
 }
