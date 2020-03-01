@@ -1,5 +1,6 @@
 package io.github.aguirresabino.bookapi.services;
 
+import io.github.aguirresabino.bookapi.exceptions.IsbnDuplicatedException;
 import io.github.aguirresabino.bookapi.models.Book;
 import io.github.aguirresabino.bookapi.repositories.BookRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,9 +33,18 @@ public class BookService {
     return this.bookRepository.findAll();
   }
 
-  public Book update(Long id, Book book) {
-    book.setId(id);
-    return this.bookRepository.save(book);
+  public Optional<Book> update(Long id, Book book) throws IsbnDuplicatedException {
+    Optional<Book> bookFound = this.bookRepository.findById(id);
+    if (bookFound.isPresent()) {
+      if (bookFound.get().getIsbn().equals(book.getIsbn())) {
+        book.setId(id);
+        return Optional.of(this.bookRepository.save(book));
+      } else {
+        throw new IsbnDuplicatedException();
+      }
+    }
+
+    return Optional.empty();
   }
 
   public void deleteById(Long id) {
