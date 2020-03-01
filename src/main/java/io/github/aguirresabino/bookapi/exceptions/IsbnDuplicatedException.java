@@ -1,12 +1,12 @@
 package io.github.aguirresabino.bookapi.exceptions;
 
-public class IsbnDuplicated extends Exception {
+public class IsbnDuplicatedException extends Exception {
 
-  public IsbnDuplicated(String message) {
+  public IsbnDuplicatedException(String message) {
     super(message);
   }
 
-  public IsbnDuplicated() {
+  public IsbnDuplicatedException() {
     super("ISBN already exists");
   }
 }
