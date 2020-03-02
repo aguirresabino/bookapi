@@ -19,7 +19,13 @@ public class BookService {
 
   private final BookRepository bookRepository;
 
-  public Book save(Book book) {
+  public Book save(Book book) throws IsbnDuplicatedException {
+    Optional<Book> bookFound = this.bookRepository.findByIsbn(book.getIsbn());
+
+    if (bookFound.isPresent()) {
+      throw new IsbnDuplicatedException();
+    }
+
     return this.bookRepository.save(book);
   }
 
