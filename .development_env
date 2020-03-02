@@ -1,0 +1,8 @@
+PORT=8080
+
+SPRING_PROFILES_ACTIVE=dev
+
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+POSTGRES_DB=bookapi
+POSTGRES_URL=jdbc:postgresql://bookapi_db_service:5432/bookapi

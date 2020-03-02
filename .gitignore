@@ -196,6 +196,5 @@ $RECYCLE.BIN/
 *.lnk
 
 .env
-.development_env
 
 # End of https://www.gitignore.io/api/java,linux,macos,maven,windows,intellij+all
