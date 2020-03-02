@@ -1,11 +1,11 @@
 package io.github.aguirresabino.bookapi.controllers.v1;
 
-import io.github.aguirresabino.bookapi.exceptions.IsbnDuplicatedException;
 import io.github.aguirresabino.bookapi.models.Book;
 import io.github.aguirresabino.bookapi.models.dtos.BookCreationDTO;
 import io.github.aguirresabino.bookapi.models.dtos.BookDTO;
 import io.github.aguirresabino.bookapi.services.BookService;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -28,6 +28,7 @@ public class BookController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
+  @SneakyThrows
   public BookDTO save(@Valid @RequestBody BookCreationDTO bookDTO) {
     final Book book = modelMapper.map(bookDTO, Book.class);
     final Book bookCreated = this.bookService.save(book);
@@ -51,18 +52,13 @@ public class BookController {
         .collect(Collectors.toList());
   }
 
+  @SneakyThrows
   @PutMapping("/{id}")
   public ResponseEntity<BookDTO> update(
       @PathVariable Long id, @Valid @RequestBody BookCreationDTO bookCreationDTO) {
 
     Book bookToUpdate = modelMapper.map(bookCreationDTO, Book.class);
-    Optional<Book> bookUpdated;
-    try {
-      bookUpdated = this.bookService.update(id, bookToUpdate);
-    } catch (IsbnDuplicatedException e) {
-      log.error(e.getMessage());
-      return ResponseEntity.badRequest().build();
-    }
+    Optional<Book> bookUpdated = this.bookService.update(id, bookToUpdate);
 
     return bookUpdated
         .map(book -> ResponseEntity.ok(modelMapper.map(book, BookDTO.class)))
