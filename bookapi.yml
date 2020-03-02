@@ -1,12 +1,12 @@
 version: "3.7"
 
 services:
-  bookapi_db_service:
+  bookapi_postgres_service:
     container_name: bookapi_db
     image: postgres
     restart: unless-stopped
     ports:
-    - "5432:5432"
+      - "5432:5432"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -14,6 +14,21 @@ services:
     volumes:
       - bookapi_db:/var/lib/postgresql
       - bookapi_data:/var/lib/postgresql/data
+    networks:
+      - bookapi
+
+  bookapi_mongo_service:
+    container_name: bookapi_mongo
+    image: mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongo
+      - MONGO_INITDB_ROOT_PASSWORD=mongo
+      - MONGO_INITDB_DATABASE=bookapi-audit
+    volumes:
+      - bookapi_mongodb:/data/db
     networks:
       - bookapi
 
@@ -35,3 +50,4 @@ networks:
 volumes:
   bookapi_db:
   bookapi_data:
+  bookapi_mongodb:
