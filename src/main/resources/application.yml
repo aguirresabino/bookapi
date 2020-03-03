@@ -16,6 +16,10 @@ spring:
     hibernate:
       ddl-auto: update
 
+javers:
+  mongodb:
+    uri: mongodb://${MONGO_HOST}:${MONGO_PORT}/${MONGO_INITDB_DATABASE}
+
 management:
   endpoints:
     web:
