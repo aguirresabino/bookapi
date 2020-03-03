@@ -7,6 +7,5 @@ POSTGRES_PASSWORD=postgres
 POSTGRES_DB=bookapi
 POSTGRES_URL=jdbc:postgresql://bookapi_postgres_service:5432/bookapi
 
-MONGO_INITDB_ROOT_USERNAME=mongo
-MONGO_INITDB_ROOT_PASSWORD=mongo
-MONGO_INITDB_DATABASE=bookapi-audit
+MONGO_HOST=bookapi_mongo_service
+MONGO_PORT=27017
