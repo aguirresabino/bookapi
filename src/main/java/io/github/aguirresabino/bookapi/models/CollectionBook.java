@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
+@Table(name = "collection")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -17,9 +18,12 @@ import java.util.List;
 @ToString
 public class CollectionBook {
 
-  @Id @GeneratedValue private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+
   @ManyToMany private List<Book> books;
-  @ManyToOne @NotNull private User user;
+  @ManyToOne @NotNull private Person person;
 
   @NotBlank(message = "Title is mandatory")
   private String title;

@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -18,9 +19,11 @@ import java.time.LocalDate;
 @Builder
 @EqualsAndHashCode
 @ToString
-public class User {
+public class Person {
 
-  @Id @GeneratedValue private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
 
   @NotBlank(message = "Name is mandatory")
   private String name;
@@ -28,7 +31,7 @@ public class User {
   @PastOrPresent private LocalDate dateOfBirth;
 
   @NotBlank(message = "User is mandatory")
-  private String user;
+  private String username;
 
   @Email private String email;
 

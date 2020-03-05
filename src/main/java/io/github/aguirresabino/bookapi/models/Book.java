@@ -20,7 +20,9 @@ import java.util.List;
 @ToString
 public class Book {
 
-  @Id @GeneratedValue private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
 
   @NotBlank(message = "Title is mandatory")
   private String title;
@@ -35,10 +37,7 @@ public class Book {
   @NotNull(message = "Number of pages is mandatory")
   private Integer pageCount;
 
-  @ElementCollection
-  @CollectionTable(name = "authors")
-  @NotEmpty
-  private List<String> authors;
+  @ElementCollection @NotEmpty private List<String> authors;
 
   @URL private String thumbnailUrl;
 
