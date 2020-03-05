@@ -38,7 +38,7 @@ public class Book {
   @ElementCollection
   @CollectionTable(name = "authors")
   @NotEmpty
-  private List<String> author;
+  private List<String> authors;
 
   @URL private String thumbnailUrl;
 
