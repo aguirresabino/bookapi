@@ -9,3 +9,4 @@ POSTGRES_URL=jdbc:postgresql://bookapi_postgres_service:5432/bookapi
 
 MONGO_HOST=bookapi_mongo_service
 MONGO_PORT=27017
+MONGO_INITDB_DATABASE=bookapi_audit
