@@ -4,6 +4,9 @@ import io.github.aguirresabino.bookapi.models.Book;
 import io.github.aguirresabino.bookapi.models.dtos.BookCreationDTO;
 import io.github.aguirresabino.bookapi.models.dtos.BookDTO;
 import io.github.aguirresabino.bookapi.services.BookService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +20,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Api(
+    value = "Book management",
+    tags = "Book management",
+    produces = "application/json",
+    consumes = "application/json")
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -26,6 +34,7 @@ public class BookController {
   private static final ModelMapper modelMapper = new ModelMapper();
   private final BookService bookService;
 
+  @ApiOperation("Create book")
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   @SneakyThrows
@@ -36,13 +45,17 @@ public class BookController {
     return modelMapper.map(bookCreated, BookDTO.class);
   }
 
+  @ApiOperation("Find book by ID")
   @GetMapping("/{id}")
-  public ResponseEntity<BookDTO> findById(@PathVariable Long id) {
+  public ResponseEntity<BookDTO> findById(
+      @ApiParam(value = "Unique book identification", required = true, example = "1") @PathVariable
+          Long id) {
     Optional<Book> book = this.bookService.findById(id);
     return book.map(value -> ResponseEntity.ok(modelMapper.map(value, BookDTO.class)))
         .orElse(ResponseEntity.notFound().build());
   }
 
+  @ApiOperation("List books")
   @GetMapping
   public List<BookDTO> findAll() {
     List<Book> books = this.bookService.findAll();
@@ -52,10 +65,13 @@ public class BookController {
         .collect(Collectors.toList());
   }
 
+  @ApiOperation("Update book")
   @SneakyThrows
   @PutMapping("/{id}")
   public ResponseEntity<BookDTO> update(
-      @PathVariable Long id, @Valid @RequestBody BookCreationDTO bookCreationDTO) {
+      @ApiParam(value = "Unique book identification", required = true, example = "1") @PathVariable
+          Long id,
+      @Valid @RequestBody BookCreationDTO bookCreationDTO) {
 
     Book bookToUpdate = modelMapper.map(bookCreationDTO, Book.class);
     Optional<Book> bookUpdated = this.bookService.update(id, bookToUpdate);
@@ -65,9 +81,12 @@ public class BookController {
         .orElse(ResponseEntity.notFound().build());
   }
 
+  @ApiOperation("Remove book by ID")
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void deleteById(@PathVariable Long id) {
+  public void deleteById(
+      @ApiParam(value = "Unique book identification", required = true, example = "1") @PathVariable
+          Long id) {
     Optional<Book> book = this.bookService.findById(id);
     book.ifPresent(this.bookService::delete);
   }
