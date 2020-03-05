@@ -7,7 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -30,12 +30,12 @@ public class Book {
   private String subtitle;
 
   @NotNull(message = "Publication date is mandatory")
-  private ZonedDateTime published;
+  private LocalDateTime published;
 
   private String publisher;
 
   @NotNull(message = "Number of pages is mandatory")
-  private Integer pageCount;
+  private Integer pagesNumber;
 
   @ElementCollection @NotEmpty private List<String> authors;
 
